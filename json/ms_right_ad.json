@@ -1,0 +1,40 @@
+{   "status": "SUCCSEE",
+    "data": [
+    {
+        "id":"p0001",
+        "title":"广告标题1",
+        "detail":"wwwwwwwwwwwwwwwwwwww",
+        "pic":"url/123/1.png",
+        "URL":"www.baidu.com",
+        "time":"2016/8/1",
+        "order":1	
+    },
+    {
+        "id":"p0002",
+        "title":"广告标题2",
+        "detail":"wwwwwwwwwwwwwwwwwwww",
+        "pic":"url/123/1.png",
+        "URL":"www.baidu.com",
+        "time":"2016/8/1",
+        "order":1   
+    },
+    {
+        "id":"p0003",
+        "title":"广告标题3",
+        "detail":"wwwwwwwwwwwwwwwwwwww",
+        "pic":"url/123/1.png",
+        "URL":"www.baidu.com",
+        "time":"2016/8/1",
+        "order":1   
+    },
+    {
+        "id":"p0004",
+        "title":"广告标题4",
+        "detail":"wwwwwwwwwwwwwwwwwwww",
+        "pic":"url/123/1.png",
+        "URL":"www.baidu.com",
+        "time":"2016/8/1",
+        "order":1   
+    }
+  ]		
+}

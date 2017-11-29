@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新闻管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="content-type" content="text/html"; charset="utf-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+<!--表格js--> 
+	<link rel="stylesheet" href="css/bootstrap-table.css">   
+    <script src="js/bootstrap-table.js"></script>   
+<!--编辑器-->
+    <script src="kindeditor-4.1.1/kindeditor-min.js"></script>
+    <script src="kindeditor-4.1.1/lang/zh_CN.js"></script>
+<!--文件上传-->
+    <link rel="stylesheet" href="css/jquery.fileupload.css">
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+<!--jquery form-->
+ 	<script src="js/jquery.form.js"></script>  
+<!--遮罩-->   
+	<script src="js/jquery.blockUI.js" type="text/javascript"></script>
+<!-- 引入通用的文件 -->
+	<script src="js/common.js"></script>
+    <script src="js/ms_common.js"></script>
+    <link rel="stylesheet" href="css/common.css">   
+<!--本页面的js-->
+	<script src="js/ms_dec.js"></script>
+
+</head>
+<body>
+<div>
+
+<!--左侧导航-->
+	<div class="col-md-2">
+    	<div class="sys_nav_div">
+            <h4 style="text-align:center; color:#333">管理系统</h4>
+            <div onClick="location.href='ms_user.html'" class="col-md-12 list_style" id="navUser">用户管理</div>
+            <div onClick="location.href='ms_tool.html'" class="col-md-12 list_style" id="navApp">小工具管理</div>
+            <div onClick="location.href='ms_news.html'" class="col-md-12 list_style" id="navApp">新闻管理</div>
+            <div onClick="location.href='ms_right.html'" class="col-md-12 list_style" id="navApp">右侧板块管理</div>
+            <div onClick="location.href='ms_goods.html'" class="col-md-12 list_style" id="navApp">商品管理</div>
+            <div onClick="location.href='ms_order.html'" class="col-md-12 list_style" id="navApp">订单管理</div>
+            <div onClick="location.href='ms_information.html'" class="col-md-12 list_style" id="navApp">消息推送</div>
+            <div onClick="location.href='ms_description.html'" class="col-md-12 list_style" id="navApp">使用说明管理</div>
+        </div>
+	</div>
+
+<!--左侧导航结束-->      
+<!--新闻管理-->
+	<div id="newsDiv" class="col-md-10">
+					<div class=" panel panel-default container col-md-12">
+                        <div id="newsBar">
+                        	<h4 style="display:inline-block;margin-right: 50px;">使用说明管理</h4>
+                            
+                            <button class="btn btn-success" id="editNews"  >
+                                编辑&nbsp;&nbsp;<i style="color: rgb( #FFF); font-size: 12px;"  class="glyphicon glyphicon-edit"></i>
+                            </button>
+                        </div>
+
+                    <table data-toggle="table"
+                               data-url="json/dec.json"
+                               data-toolbar="#newsBar"
+                               data-search="true"
+                               data-click-to-select="true"
+                               data-show-refresh="true"
+                               data-height="480"
+                               data-show-columns="true"
+                               
+                               data-minimum-count-columns="2"
+                               data-show-pagination-switch="true"
+                               data-pagination="true"
+                               data-page-list="[10, 25, 50, 100, ALL]"
+                               data-show-footer="false"
+                               
+                         id="newsTable"
+                               >
+                        <thead>
+                        <tr>
+                            <th data-field="state" data-checkbox="true"></th>
+                            <th data-field="id"  data-visible="false">id</th>
+                            <th data-field="menu_id"  data-visible="true" data-sortable="true">菜单ID</th>
+                            <th data-field="author"  data-visible="true" data-sortable="true">作者</th>
+                            <th data-field="pubtime"  data-visible="true" data-align="center" data-sortable="true">发表时间</th>
+                            <th data-field="pic"  data-visible="false">图片</th>
+                            <th data-field="relative"  data-visible="false" >相关</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    
+                        <p>已选中<span id="now_ck_num">0</span>项</p> 
+                    
+                    </div>
+				</div>
+<!-- ----------------------------消息弹出的模态框----------------------------------- -->                
+
+
+        <div class="modal fade" id="newsModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+           <div class="modal-dialog" style="width:800px;">
+              <div class="modal-content">
+                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                          &times;
+                    </button>
+                    <h4 class="modal-title"></h4>
+                 </div>
+
+                 <div class="modal-body" style=" text-align:center">
+                    
+                    <form style="text-align:left" id="newsForm" class="form-horizontal" role="form" action="json/dec.json" method="get" >     <!--陈向伟-->
+                        <input type="text"  class="form-control input-sm" style="display:none;" id="id" name="id">
+                         <div class="form-group user_form_height" id="cat_id_div">
+                            <label class="col-sm-2 user_label">选择菜单</label>
+                            <div class="col-sm-9">
+	                            <select id="menu_id" class="form-control input-sm" name="menu_id">
+	                                <option value="注册及登录" selected = "selected" >注册及登录</option>
+	                                <option value="首页" >首页</option>
+	                                <option value="数据分析" >数据分析</option>
+	                                <option value="帮助" >帮助</option>
+	                                <option value="管理系统" >管理系统</option>
+	                                <option value="退出" >退出</option>
+	                                <option value="我的目录" >我的目录</option>
+	                                <option value="分析流程" >分析流程</option>
+	                                <option value="我的项目" >我的项目</option>
+	                                <option value="回收站" >回收站</option>
+	                                <option value="小工具" >小工具</option>
+	                                <option value="资源监控" >资源监控</option>
+	                                <option value="我的目录" >分析流程类型</option>
+	                                <option value="分析流程" >流程工具使用</option>
+	                                <option value="我的项目" >深度挖掘使用</option>
+	                                <option value="回收站" >小工具类型</option>
+	                                <option value="小工具" >小工具使用</option>
+	                            </select>
+                            </div>
+                        </div> 
+                        <div class="form-group user_form_height">
+                            <label class="col-sm-2">作者</label>
+                            <div class="col-sm-9">
+                            <input type="text"  class="form-control input-sm" required id="author" name="author">
+                            </div>
+                        </div>
+                        <div class="form-group user_form_height">
+                            <label class="col-sm-2">发表时间</label>
+                            <div class="col-sm-9">
+                            <input type="text"  class="form-control input-sm" required id="pubtime" name="pubtime">
+                            </div>
+                        </div>
+                        <div class="form-group user_form_height">
+                            <label class="col-sm-2">相关</label>
+                            <div class="col-sm-9">
+                            <input type="text"  class="form-control input-sm"  id="relative" name="relative">
+                            </div>
+                        </div>
+                        <textarea id="detail" name="detail" style="width:760px;height:300px;visibility:hidden;"></textarea>
+                        <!--<div class="form-group user_form_height" style="margin-top: 15px;margin-bottom: 15px;">
+                            <label class="col-sm-2 user_label">图片</label>
+                            <div class="col-sm-8">
+                                <input type="text"  class="form-control input-sm"  id="pic" name="pic" readonly>
+                            </div>
+                            <span class="btn btn-success fileinput-button btn-sm col-md-2" style="width: 60px;"> <i class="glyphicon glyphicon-upload"></i> <span>上传</span>
+                                <input id="uploadNewsPic" type="file" >
+                            </span> 
+                        </div> 
+						<textarea id="detail1" name="detail1" style="width:760px;height:300px;visibility:hidden;"></textarea>-->
+                        <div class="modal-footer">
+                            <button type="submit"   class="btn btn-primary"> 提交 </button>
+                            <button type="button" id="cancel" class="btn btn-default" data-dismiss="modal"> 取消 </button>
+                        </div>
+                    </form>
+                   
+                 </div>   
+              </div>
+        </div>
+        </div>
+            
+ <!---------------------------------模态框结束--------------------------------------------->              
+
+<!--新闻管理结束--> 
+</div>
+
+
+</body>
+</html>

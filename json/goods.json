@@ -1,0 +1,24 @@
+
+{
+    "status": "SUCCSEE",
+    "data": [
+        {	"id": "0001",
+            "goods_name": "产品名称一",
+	        "goods_attr":0,
+            "perprice": "100.22",
+            "provide": "拓美科"
+        },
+        {	"id": "0002",
+            "goods_name": "产品名称二",
+	        "goods_attr":0,
+            "perprice": "100.22",
+            "provide": "拓美科11"
+        },
+        {	"id": "0003",
+            "goods_name": "产品名称三",
+	        "goods_attr":1,
+            "perprice": "100.22",
+            "provide": "拓美科333"
+        }
+]		
+}

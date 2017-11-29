@@ -1,0 +1,32 @@
+{
+    "status": "SUCCSEE",
+    "data":[
+    {
+        "id": "a0001",
+        "companyname": "拓美科",
+        "name": "xiaoming",
+        "email": "123@qq.com",
+        "face": "img/1.png",
+        "phone": "12345678945",
+        "status": "apply"
+    },
+    {
+        "id": "a0002",
+        "companyname": "拓美科",
+        "name": "张三",
+        "email": "123@qq.com",
+        "face": "img/1.png",
+        "phone": "12345678945",
+        "status": "normal"
+    },
+    {
+        "id": "a0003",
+        "companyname": "拓美科",
+        "name": "李四",
+        "email": "123@qq.com",
+        "face": "img/1.png",
+        "phone": "12345678945",
+        "status": "apply"
+    }
+]
+}
