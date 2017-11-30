@@ -61,6 +61,15 @@ $(function(){
 			});  
 	
 	});
+	 
+	$("#add").on("click",function(){
+		var arr=$('#tree').treeview('getChecked'); 
+	 	console.log(arr)
+		var singleNode = {  
+                    text: "小小" 
+                  };  
+        $("#tree").treeview("addNode", [singleNode,arr]);  
+	})
 })
 
 	function getTree(){
