@@ -1,18 +1,5 @@
 var editor;
-//给项目页设置定时器
 $(function(){
-
-	$("button[name='refresh']").click(function(){
-		$("#now_ck_num").text(0);
-	});
-	$("#newsDiv button[name='paginationSwitch']").after('<button class="btn btn-default" title="trash" name="trash" id="removeNews"><i class="glyphicon glyphicon-trash icon-trash"></i></button>');
-
-	//给项目页设置定时器
-	setInterval("rf_bsTable('newsTable')", 300000); 
-	//实时统计选中checkbox的个数		
-	checkedNow1('newsTable','now_ck_num'); 
-
-
 	KindEditor.options.filterMode = false;
     KindEditor.ready(function(K) {
         editor = K.create('#detail', {
@@ -20,65 +7,8 @@ $(function(){
         });
         
     });
-
-	//二级联动
-	$("#cat_id").change(function(){
-		var cat_id = $("#cat_id").val();  //当前选择的一级标题
-		add_cat_id(cat_id);
-	});
-
-	//新增按钮
-	$("#creatNews").click(function(){
-		
-		$('.modal-title').text("添加页面");
-		clearForm();
-		$('#newsModal').modal('show');      //打开模态框
-	});
-
-	//编辑按钮
-	$("#editNews").click(function(){
-		$('.modal-title').text("编辑页面");
-		clearForm();
-		var row = editParams('newsTable','newsModal'); //获该行所有数据，打开模态框
-		if(row){
-			$.ajax({
-				url:'json/decDetail.json',     //陈向伟，传给你id  返回正文信息
-				type:'get',
-				data:{id:row.id},
-				dataType: "json",
-				success:function(data,textStatus){
-					for(var key in data.data){
-						if(key=="detail"){
-							editor.html(data.data["detail"]);
-						}else{
-							$("#"+key).val(data.data[key])
-						}
-					}
-				},
-				error: function(XMLHttpRequest){
-					alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
-				}
-				 
-			});  
-
-		}	
-			
-			
-		
-	})
-
-	//文件上传(url为向后台传的地址，uploadId为上传按钮的id，inputId为返回的路径填写到的input)
-	$("#uploadNewsPic").click(function(){
-		uploadFile('json/uploadUrl.json','uploadNewsPic','#pic')      //陈向伟
-	});
-
-//添加点击函数 这里直接写入了remove所用的参数，第一个参数是当前的表格id，第二个是网后台传的id，最后是向后台发送的地址
-	$("#removeNews").click(function(){
-		remove('newsTable','id','json/dec.json');       //陈向伟
-		$("#now_ck_num").text(0);
-	});
-	$("#newsForm").submit(function(){
-		debugger
+    
+    $("#newsForm").submit(function(){
 		var formData=allParams("newsForm");
 		editor.sync();
 		var textDetail= $("#detail").val(); 
@@ -92,10 +22,8 @@ $(function(){
 								if(data['status']=='ERROR'){
 									alert(data['data']);
 								}else{
-									$("#newsTable").bootstrapTable('refresh');
-									$("#now_ck_num").text(0);	
-									$('#newsModal').modal('hide');
-									alert("提交成功！");						
+									return false;
+									alert("修改成功！");						
 								}
 							},
 							error:function(){
@@ -103,54 +31,133 @@ $(function(){
 							}
 		}
 		$(this).ajaxSubmit(appListOptions);
-		
 		return false;
 	});
-
-
-});
-
-//删除选中的行
-function removeUser(){
-	num = checkedNum("userTable");					//选中个数
-	remove_confirm("userTable","userName",num,'json/job.json');	//删除。参数分别是bootstrap的名字（用来刷新），列名字（ID），删除的数量（用于显示删除几项），后台传输的地址
-};                                    //陈向伟
-
-
-//清空表格里的数据
-function clearForm(){
-	var allFormParams = $("#newsForm").serializeArray();  //所有表单中的数据
 	
-	for(var i=0;i<allFormParams.length;i++){
-		var key = allFormParams[i]["name"];
+	
+	$('#tree').treeview({data:getTree()}); 
+	$('#tree').on('nodeSelected', function(event, data) {
+		$.ajax({
+				url:'json/dec1.json',     //陈向伟，传给你id  返回正文信息
+				type:'get',
+				data:{id:data.href},
+				dataType: "json",
+				success:function(data,textStatus){
+					if(textStatus=="success"){
+						for(var key in data.data){
+							if(key=="detail"){
+								editor.html(data.data["detail"]);
+							}else{
+								$("#"+key).val(data.data[key])
+							}
+						}
+					}
 
-		if(key == "detail"){
-			editor.html('');
+				},
+				error: function(XMLHttpRequest){
+					alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
+				}
+				 
+			});  
+	
+	});
+})
+
+	function getTree(){
+	   var tree = [
+		    {
+		    	text: "欢迎使用",
+		    	href:"100"
+		  	},
+		  	{
+		    	text: "注册及登录",
+		    	href:"200"
+		  	},
+		  	{
+		    	text: "首页",
+		    	href:"300"
+		  	},
+			{
+			    text: "数据分析",
+			    href:"400",
+			    nodes: [
+				    {
+				        text: "我的目录",
+				        href:"410"
+				    },
+				    {
+				        text: "分析流程",
+				         href:"420",
+				        nodes: [
+				          {
+				            text: "分析流程类型",
+				            href:"421"
+				          },
+				          {
+				            text: "分析流程使用",
+				            href:"422"
+				          },
+				          {
+				            text: "深度挖掘使用",
+				            href:"423"
+				          }
+				        ]
+				    },
+				    {
+				        text: "我的项目",
+				        href:"430"
+				    },
+				    {
+				        text: "回收站",
+				        href:"440"
+				    }
+				    ,
+				    {
+				        text: "小工具",
+				        href:"450",
+				        nodes: [
+					        {
+					            text: "小工具类型",
+					            href:"451"
+					        },
+					        {
+					            text: "小工具使用",
+					            href:"452"
+					        }
+				        ]
+				    }
+				    ,
+				    {
+				        text: "资源监控",
+				        href:"460"
+				    }
+			    ]
+			},
+			{
+			    text: "帮助",
+			    href:"500"
+			},
+			{
+			    text: "管理系统",
+			    href:"600"
+			},
+			{
+			    text: "退出",
+			    href:"700"
+			}
+		  
+		];
+		return tree;  
+   }  
+   
+   
+	function allParams(id){
+		var app = $("#"+id).serializeArray();
+		var json1 = {};
+		for(var i=0;i<app.length;i++){
+				var name = app[i].name;
+				var value = app[i].value;
+				json1[name] = value;
 		}
-		else if(key == "cat_id"){
-			$("#"+key).val("01");
-			add_cat_id("01")
-		}
-		else if(key == "cat_name"){
-			$("#"+key).val("前沿研究");
-		}
-		else if(key == "short_num"){
-			$("#"+key).val("7");
-		}
-		else{
-			$("#"+key).val("");
-		}
+		return json1;
 	};
-	//$("#cat_name").val("前沿研究");
-};
-
-function allParams(id){
-	var app = $("#"+id).serializeArray();
-	var json1 = {};
-	for(var i=0;i<app.length;i++){
-			var name = app[i].name;
-			var value = app[i].value;
-			json1[name] = value;
-	}
-	return json1;
-};
