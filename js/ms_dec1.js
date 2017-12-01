@@ -1,7 +1,6 @@
 var editor;
 //给项目页设置定时器
 $(function(){
-
 	$("button[name='refresh']").click(function(){
 		$("#now_ck_num").text(0);
 	});
