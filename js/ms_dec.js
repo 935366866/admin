@@ -37,6 +37,7 @@ $(function(){
 	
 	$('#tree').treeview({data:getTree()}); 
 	$('#tree').on('nodeSelected', function(event, data) {
+		
 		$.ajax({
 				url:'json/dec1.json',     //陈向伟，传给你id  返回正文信息
 				type:'get',
