@@ -1,0 +1,28 @@
+#tree .list-group-item:hover .badge{
+		display: block;
+	}
+	.badge{
+		width: 48px;
+		height: 31px;
+		position: absolute;
+		top: 5px;
+		font-size: 33px;
+		right: 1px;
+		border-radius: 3px;
+		display: none;
+		background: #F5F5F5;
+		color: #ccc;
+		padding:0px;
+		
+	}
+	.badge:hover{
+		background: #F5F5F5;
+		color: #ccc;
+	}
+	.node-selected>.badge{
+		background: #81a1f4;
+		color: #ffffff;
+	}
+	.del{
+		margin-left: 7px;
+	}
