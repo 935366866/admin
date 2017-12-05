@@ -40,7 +40,7 @@ $(function(){
 		$.ajax({
 				url:'json/dec1.json',     //陈向伟，传给你id  返回正文信息
 				type:'get',
-				data:{id:data.href},
+				data:{id:data.unId},
 				dataType: "json",
 				success:function(data,textStatus){
 					if(textStatus=="success"){
@@ -62,59 +62,92 @@ $(function(){
 	
 	});
 	
+	$("#menuNameBtn").click(function(){
+		addMenuAjax()
+	})
+	 $("#menuName").keydown(function(k){
+		if(k.keyCode==13 ){
+			addMenuAjax()
+		}
+	});
+	$('#addModal').on('shown.bs.modal', function () {
+	  $('#menuName').focus()
+	})
 
 
 })
-	function del(ele){
-		cancelBubble();
-		var pp= $('#tree').treeview('getSelected');
-		console.log(pp)
-		$('#tree').treeview('removeNode', [pp, { silent: true } ]);
-		
-	}
-//parentNode
-//targetNodes
- function cancelBubble(e) { 
-    var evt = e ? e : window.event; 
-    if (evt.stopPropagation) {        //W3C 
-        evt.stopPropagation(); 
-    }else {       //IE      
-        evt.cancelBubble = true; 
-    }  
- }
-	function add(ele){
-		$("#addModal").show();
-		$("#menuNameBtn").click(function(){
-			addMenu(ele);
-		})
-		 $("#menuName").keydown(function(k){
-			if(k.keyCode==13 ){
-				addMenu(ele);
+
+	function addMenuAjax(){
+		var name=$("#menuName").val();
+		$.ajax({
+			type:"get",
+			url:"json/addMenu.json",
+			async:true,
+			data:{
+				name:name,
+				parentId:parentNode.unId
+			},
+			success:function(data){
+				var unId = data.data.unId;
+				addMenu(parentNode,name,unId);
 			}
 		});
 	}
-	
-	function addMenu(ele){
-		var value=$("#menuName").val();
-//		$.ajax({
-//			type:"(get)",
-//			url:"",
-//			data:{menuName:value},
-//			
-//		});
-		$('#addModal').modal('hide')
+	function del(ele){
+		cancelBubble();
+		var nodeId = $(ele).parents("li").data("nodeid");
+		var nodes= $('#tree').treeview('getNodes');
+		var unId=null;
+		var needDelNode=null;
+		for (var i=0;i<nodes.length;i++) {
+			if(nodes[i].nodeId==nodeId){
+				unId=nodes[i].unId;
+				needDelNode=nodes[i];
+				break;
+			}
+		}	
+		$.ajax({
+			type:"post",
+			url:"",
+			data:{
+				unId:unId
+			},
+			success:function(data){
+				$('#tree').treeview('removeNode',[needDelNode, { silent: true } ]);
+			}
+		})
 		
-		var  parentId=ele.parent("li").attr("data-nodeid");
-		console.log(parentId)
-		var pp= $('#tree').treeview('getSelected');
-		console.log(pp)
-		var arr=$('#tree').treeview('getParents');
-		console.log(arr)
-		var singleNode = {  
-                    text: value ,
+	}
+
+	
+	var parentNode = null;
+	function add(ele){
+		var nodeId = $(ele).parents("li").data("nodeid");
+		var nodes= $('#tree').treeview('getNodes');
+		for (var i=0;i<nodes.length;i++) {
+			if(nodes[i].nodeId==nodeId){
+				parentNode = nodes[i];
+				break;
+			}
+		}
+		
+		if(!parentNode){
+			alert("父节点不存在,无法添加子节点");
+			return;
+		}
+		$("#addModal").show();
+		
+	}
+	
+	function addMenu(parentNode,name,unId){
+		var singleNode = { 
+                    text: name ,
+                    unId:unId,
                    	tags: ['+<span class="del" onclick="del($(this))">-</span>']
                   };  
-        $("#tree").treeview("addNode", [singleNode,parentId,{ silent: true }]);  
+
+        $('#tree').treeview('addNode', [ singleNode, parentNode, 0, { silent: true } ]);
+        $('#addModal').modal('hide')
 	}
 	
 	function getTree(){
@@ -122,75 +155,75 @@ $(function(){
 		    {
 		    	text: "欢迎使用",
 		    	tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-		    	href:"100"
+		    	unId:"100"
 		  	},
 		  	{
 		    	text: "注册及登录",
-		    	href:"200",
+		    	unId:"200",
 		    	tags: ['+<span class="del" onclick="del($(this))">-</span>']
 		  	},
 		  	{
 		    	text: "首页",
-		    	href:"300",
+		    	unId:"300",
 		    	tags: ['+<span class="del" onclick="del($(this))">-</span>']
 		  	},
 			{
 			    text: "数据分析",
-			    href:"400",
+			    unId:"400",
 			    tags: ['+<span class="del" onclick="del($(this))">-</span>'],
 			    nodes: [
 				    {
 				        text: "我的目录",
 				        tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				        href:"410"
+				        unId:"410"
 				    },
 				    {
 				        text: "分析流程",
 				        tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				         href:"420",
+				         unId:"420",
 				        nodes: [
 				          {
 				            text: "分析流程类型",
 				            tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				            href:"421"
+				            unId:"421"
 				          },
 				          {
 				            text: "分析流程使用",
 				            tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				            href:"422"
+				            unId:"422"
 				          },
 				          {
 				            text: "深度挖掘使用",
 				            tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				            href:"423"
+				            unId:"423"
 				          }
 				        ]
 				    },
 				    {
 				        text: "我的项目",
 				        tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				        href:"430"
+				        unId:"430"
 				    },
 				    {
 				        text: "回收站",
 				        tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				        href:"440"
+				        unId:"440"
 				    }
 				    ,
 				    {
 				        text: "小工具",
 				        tags: ['+<span class="del" onclick="del($(this))">-</span>'], 
-				        href:"450",
+				        unId:"450",
 				        nodes: [
 					        {
 					            text: "小工具类型",
 					            tags: ['+<span class="del" onclick="del($(this))">-</span>'],  
-					            href:"451"
+					            unId:"451"
 					        },
 					        {
 					            text: "小工具使用",
 					            tags: ['+<span class="del" onclick="del($(this))">-</span>'], 
-					            href:"452"
+					            unId:"452"
 					        }
 				        ]
 				    }
@@ -198,28 +231,29 @@ $(function(){
 				    {
 				        text: "资源监控",
 				        tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-				        href:"460"
+				        unId:"460"
 				    }
 			    ]
 			},
 			{
 			    text: "帮助",
 			    tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-			    href:"500"
+			    unId:"500"
 			},
 			{
 			    text: "管理系统",
 			    tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-			    href:"600"
+			    unId:"600"
 			},
 			{
 			    text: "退出",
 			    tags: ['+<span class="del" onclick="del($(this))">-</span>'],
-			    href:"700"
+			    unId:"700"
 			}
 		  
 		];
-		return tree;  
+		var newTree=[{text:"菜单列表",nodes:tree}]
+		return newTree;  
    }  
    	
    
@@ -233,3 +267,12 @@ $(function(){
 		}
 		return json1;
 	};
+	
+	function cancelBubble(e) { 
+	    var evt = e ? e : window.event; 
+	    if (evt.stopPropagation) {        //W3C 
+	        evt.stopPropagation(); 
+	    }else {       //IE      
+	        evt.cancelBubble = true; 
+	    }  
+	}
