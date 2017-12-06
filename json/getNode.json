@@ -1,0 +1,111 @@
+{
+    "status": "success",
+    "data": [{ 
+    			"text": "菜单列表",
+    			"tags": ["+"],
+    			"nodes":[
+					    {
+					    	"text": "欢迎使用",
+					    	"tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+					    	"unId":"100"
+					  	},
+					  	{
+					    	"text": "注册及登录",
+					    	"unId":"200",
+					    	"tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"]
+					  	},
+					  	{
+					    	"text": "首页",
+					    	"unId":"300",
+					    	"tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"]
+					  	},
+						{
+						    "text": "数据分析",
+						    "unId":"400",
+						    "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+						    "nodes": [
+							    {
+							        "text": "我的目录",
+							        "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							        "unId":"410"
+							    },
+							    {
+							        "text": "分析流程",
+							       	"tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							        "unId":"420",
+							        "nodes": [
+							          {
+							            "text": "分析流程类型",
+							            "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							            "unId":"421"
+							          },
+							          {
+							            "text": "分析流程使用",
+							           "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							            "unId":"422"
+							          },
+							          {
+							            "text": "深度挖掘使用",
+							            "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							            "unId":"423"
+							          }
+							        ]
+							    },
+							    {
+							        "text": "我的项目",
+							        "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							        "unId":"430"
+							    },
+							    {
+							        "text": "回收站",
+							        "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							        "unId":"440"
+							    }
+							    ,
+							    {
+							        "text": "小工具",
+							        "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							        "unId":"450",
+							        "nodes": [
+								        {
+								            "text": "小工具类型",
+								            "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"], 
+								            "unId":"451"
+								        },
+								        {
+								            "text": "小工具使用",
+								            "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+								            "unId":"452"
+								        }
+							        ]
+							    }
+							    ,
+							    {
+							        "text": "资源监控",
+							        "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+							        "unId":"460"
+							    }
+						    ]
+						},
+						{
+						    "text": "帮助",
+						    "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"], 
+						    "unId":"500"
+						},
+						{
+						    "text": "管理系统",
+						    "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+						    "unId":"600"
+						},
+						{
+						    "text": "退出",
+						    "tags": ["+<span class='del' onclick='del($(this))'>-</span><span class='edit' onclick='edit($(this))'>edit</span>"],
+						    "unId":"700"
+						}
+					  
+					]
+        }]
+
+}
+
+
