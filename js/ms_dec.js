@@ -7,7 +7,6 @@ $(function(){
         });
         
     });
-    
     $("#newsForm").submit(function(){
 		var formData=allParams("newsForm");
 		editor.sync();
