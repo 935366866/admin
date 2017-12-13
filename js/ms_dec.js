@@ -39,6 +39,7 @@ $(function(){
 			dataType: "json",
 			success:function(data,status){
 				if(status=="success"){
+					console.log(data.data)
 					$('#tree').treeview({data:data.data}); 
 					$('#tree').on('nodeSelected', function(event, data) {
 						if(data.nodeId!="0.0"){
@@ -138,8 +139,7 @@ $(function(){
 			}
 		});
 	}
-	function del(ele){
-		cancelBubble();
+	function del(event,ele){
 		var nodeId = $(ele).parents("li").data("nodeid");
 		var nodes= $('#tree').treeview('getNodes');
 		var unId=null;
@@ -151,6 +151,7 @@ $(function(){
 				break;
 			}
 		}	
+		stopEvent(event)
 		if(confirm("确定删除吗？一旦删除将无法恢复！")){
 			$.ajax({
 				type:"get",
@@ -167,6 +168,7 @@ $(function(){
 				}
 			})
 		}
+		
 	}
 	var node = null;
 	function edit(ele){
@@ -184,6 +186,7 @@ $(function(){
 	
 	var parentNode = null;
 	function add(ele){
+		alert(2222)
 		var nodeId = $(ele).parents("li").data("nodeid");
 		var nodes= $('#tree').treeview('getNodes');
 		for (var i=0;i<nodes.length;i++) {
@@ -205,7 +208,7 @@ $(function(){
 		var singleNode = { 
                     text: name ,
                     unId:unId,
-                   	tags: ['+<span class="del" onclick="del($(this))">-</span>']
+                   	tags: ['+<span class="del" onclick="del(even,$(this))">-</span>']
                   };  
 
         $('#tree').treeview('addNode', [ singleNode, parentNode, 0, { silent: true } ]);
@@ -330,11 +333,15 @@ $(function(){
 		return json1;
 	};
 	
-	function cancelBubble(e) { 
-	    var evt = e ? e : window.event; 
-	    if (evt.stopPropagation) {        //W3C 
-	        evt.stopPropagation(); 
-	    }else {       //IE      
-	        evt.cancelBubble = true; 
-	    }  
-	}
+
+	function stopEvent(event){ //阻止冒泡事件
+     //取消事件冒泡
+     var e=arguments.callee.caller.arguments[0]||event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容
+     if (e && e.stopPropagation) {
+     // this code is for Mozilla and Opera
+     e.stopPropagation();
+     } else if (window.event) {
+     // this code is for IE
+      window.event.cancelBubble = true;
+     }
+    }

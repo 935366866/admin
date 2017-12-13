@@ -20,6 +20,7 @@
 	<script charset="utf-8" src="../plugins/code/prettify.js"></script>
 	<script>
 		KindEditor.ready(function(K) {
+			debugger
 			var editor1 = K.create('textarea[name="content1"]', {
 				cssPath : '../plugins/code/prettify.css',
 				uploadJson : '../php/upload_json.php',
